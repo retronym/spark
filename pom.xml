@@ -3176,6 +3176,22 @@
       </repositories>
     </profile>
 
+    <profile>
+      <id>scala-pr-validation-snapshots</id>
+      <repositories>
+       <repository>
+          <id>scala-pr-validation-snapshots</id>
+          <url>https://scala-ci.typesafe.com/artifactory/scala-pr-validation-snapshots</url>
+          <snapshots>
+            <enabled>true</enabled>
+          </snapshots>
+          <releases>
+            <enabled>false</enabled>
+          </releases>
+        </repository>
+      </repositories>
+    </profile>
+
     <!--
       These empty profiles are available in some sub-modules. Declare them here so that
       maven does not complain when they're provided on the command line for a sub-module
