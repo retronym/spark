@@ -74,6 +74,16 @@ object Main extends Logging {
     val settings = new GenericRunnerSettings(scalaOptionError)
     settings.processArguments(interpArguments, true)
 
+    // Support Scala 2.12.10 and 2.12.11. The latter introduces `-Yrepl-use-magic-imports` and Spark
+    // requires that to be enabled to take advantage of the dead code eliminiation now in `-Yclass-based`
+    // that solves https://issues.apache.org/jira/browse/SPARK-5150.
+    //
+    // See https://github.com/scala/scala/pull/8576
+    // See https://github.com/scala/scala/pull/8712
+    //
+    // TODO: Move the setting into the list above once support for 2.12.10 and below is dropped.
+    settings.processArguments("-Yrepl-use-magic-imports" :: Nil, processAll = false)
+
     if (!hasErrors) {
       interp.process(settings) // Repl starts and goes in loop of R.E.P.L
       Option(sparkContext).foreach(_.stop)
